@@ -5,17 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-        private String url="jdbc:mysql://itsovy.sk:3306/chat2021";
-        private String username="mysqluser";
-        private String password="Kosice2021!";
-        private final String insertNewUser="INSERT INTO user (login, password) VALUES (?, ?) ";
-        private final String loginUser="SELECT * FROM user WHERE login LIKE ? AND password LIKE ? ";
-        private final String newMessage="";
-        private final String toUser="";
+    
+        private final String insertNewUser="INSERT INTO user (login, password) VALUES (?, ?); ";
+        private final String loginUser="SELECT * FROM user WHERE login LIKE ? AND password LIKE ?; ";
+        private final String newMessage="INSERT INTO message(fromUser, toUser, text) VALUES (?,?,?); ";
         private final String newPassword="";
-        private final String myOldMesages="";
-        private final String userID="";
-        private final String deleteMsg="";
+        private final String myOldMesages="SELECT user.login AS Who, text AS what,dt AS when FROM message INNER JOIN chat2021.user ON user.id = message.fromUser WHERE toUser = (?); ";
+        private final String userID="SELECT id FROM chat2021.user WHERE login LIKE (?) ; ";
+        private final String deleteMsg="DELETE FROM message WHERE toUser = (?) ; ";
 
     private Connection getConnection() throws ClassNotFoundException, SQLException {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -90,7 +87,6 @@ public class Database {
         public boolean sendMessage(int from,int to,String text){
             if(text==null || text.equals(""))
                 return false;
-             to=getUserId(toUser);
             if (to==-1)
                 return false;
             try {
@@ -167,7 +163,9 @@ public class Database {
                 ps.setString(1, login);
                 ResultSet rs= ps.executeQuery();
                 while(rs.next()){
-                    String user= rs.getString("Message");
+                    String from = rs.getString("Who");
+                    String text = rs.getString("Message");
+                    Date time = rs.getDate("When");
                 }
                 conn.close();
             } catch (SQLException throwables) {
@@ -192,6 +190,7 @@ public class Database {
                     conn.close();
                     return id;
                 }else{
+                    conn.close();
                     return -1;
                 }
             } catch (SQLException throwables) {
