@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ChatControler">
+   <children>
+      <ScrollPane layoutX="67.0" layoutY="54.0" prefHeight="479.0" prefWidth="507.0">
+         <content>
+            <ScrollBar orientation="VERTICAL" prefHeight="477.0" prefWidth="14.0" />
+         </content>
+      </ScrollPane>
+      <TextField layoutX="67.0" layoutY="533.0" prefHeight="25.0" prefWidth="507.0" />
+      <Button layoutX="584.0" layoutY="533.0" mnemonicParsing="false" text="Send" />
+      <Label layoutX="67.0" layoutY="24.0" text="Logged user :" />
+      <Label fx:id="lbl_login" layoutX="151.0" layoutY="24.0" text="Login" textFill="#1a00ff" />
+      <Button layoutX="716.0" layoutY="20.0" mnemonicParsing="false" text="Logout" />
+   </children>
+</AnchorPane>
