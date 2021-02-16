@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sk.kosickaakademia.mizak.chatapp.sample.ChatController">
+   <children>
+      <Label layoutX="33.0" layoutY="32.0" prefHeight="25.0" prefWidth="105.0" text="Logged users:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_login" layoutX="138.0" layoutY="28.0" prefHeight="32.0" prefWidth="171.0" text="User" textFill="#02721c">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="480.0" prefHeight="25.0" prefWidth="105.0" text="New message:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField layoutX="138.0" layoutY="478.0" prefHeight="30.0" prefWidth="105.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField layoutX="33.0" layoutY="515.0" prefHeight="30.0" prefWidth="533.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button ellipsisString="20" layoutX="577.0" layoutY="516.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Send" textFill="#214316">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="33.0" layoutY="70.0" prefHeight="25.0" prefWidth="105.0" text="Chat:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ListView layoutX="33.0" layoutY="104.0" prefHeight="370.0" prefWidth="620.0" />
+      <Button ellipsisString="20" layoutX="660.0" layoutY="445.0" mnemonicParsing="false" text="Refresh" textFill="#214316">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="734.0" layoutY="16.0" mnemonicParsing="false" text="Logout" />
+   </children>
+</Pane>
