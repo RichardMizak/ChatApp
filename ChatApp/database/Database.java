@@ -9,15 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
+
+    private final String insertNewUser = "INSERT INTO user (login, password) VALUES (?,?)";
+    private final String loginUser = "Select * FROM user Where login LIKE ? and password LIKE ?";
+    private final String newMessage = "INSERT INTO message( fromUser, toUser, text) VALUES (?,?,?)";
+    private final String deleteMsg="DELETE FROM message WHERE toUser = (?) ; ";
+    private final String getID = "SELECT id FROM user WHERE login LIKE ?";
+    private final String newPassword="";
+    private final String myOldMesages="SELECT * FROM message  " +
+                                      "INNER JOIN user ON user.id=message.fromUser " +
+                                      "WHERE toUser = ?";
+    //----------------------------------------------------------------------------------------------
     private String url = "jdbc:mysql://itsovy.sk:3306/chat2021";
     private String username = "mysqluser";
     private String password = "Kosice2021!";
-    private final String insertNewUser = "INSERT INTO user (login, password) VALUES (?,?)";
-    private final String loginUser = "Select * FROM user Where login LIKE ? and password LIKE ?";
-    private final String newMessage = "INSERT INTO message( from, to, text) VALUES (?,?,?)";
-    private final String deleteMsg="DELETE FROM message WHERE toUser = (?) ; ";
-    private final String newPassword="";
-    private final String myOldMesages="SELECT user.login AS Who, text AS what,dt AS when FROM message INNER JOIN chat2021.user ON user.id = message.fromUser WHERE toUser = (?); ";
     //----------------------------------------------------------------------------------------------
     private Connection getConnection() throws ClassNotFoundException,SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -25,7 +30,6 @@ public class Database {
         return conn;
     }
     //----------------------------------------------------------------------------------------
-
     public boolean insertNewUser(String login,String password) {
         if (login == null || login.equals("") || password == null || password.length() < 6)
             return false;
@@ -144,7 +148,7 @@ public class Database {
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return false;
+        return true;
     }
 //--------------------------------------------------------------------------------------
     public int getUserId(String login){
@@ -152,24 +156,26 @@ public class Database {
             return -1;
         try{
             Connection conn=getConnection();
-            PreparedStatement ps= conn.prepareStatement(url);
-            ps.setString(1, login);
-            ResultSet rs=ps.executeQuery();
-            System.out.println(ps);
-            if (rs.next()){
-                int id= rs.getInt("id");
-                conn.close();
-                return id;
-            }else{
-                conn.close();
-                return -1;
+            if(conn!=null) {
+                PreparedStatement ps = conn.prepareStatement(getID);
+                ps.setString(1, login);
+                ResultSet rs = ps.executeQuery();
+                System.out.println(ps);
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    conn.close();
+                    return id;
+                } else {
+                    conn.close();
+                    return -1;
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return 0;
+        return -1;
     }
 //-----------------------------------------------------------------------------------------
     public List<Message> getMyMessages(String login){
@@ -191,12 +197,14 @@ public class Database {
                 Date time = rs.getDate("When");
             }
             conn.close();
+          //  deleteMessages(login);
+            return messagesList;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return messagesList;
+        return null;
     }
 //------------------------------------------------------------------------------------------
 public boolean deleteMessages(String login){
