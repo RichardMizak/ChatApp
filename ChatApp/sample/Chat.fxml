@@ -2,10 +2,13 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sk.kosickaakademia.mizak.chatapp.sample.ChatController">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#797979b0" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="40.0" layoutX="22.0" layoutY="26.0" stroke="BLACK" strokeType="INSIDE" width="199.0" />
       <Label layoutX="33.0" layoutY="32.0" prefHeight="25.0" prefWidth="105.0" text="Logged users:">
          <font>
             <Font size="16.0" />
@@ -16,37 +19,38 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="480.0" prefHeight="25.0" prefWidth="105.0" text="New message:">
+      <TextField fx:id="txt_message" layoutX="174.0" layoutY="557.0" prefHeight="30.0" prefWidth="533.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="61.0" layoutY="559.0" prefHeight="25.0" prefWidth="114.0" text="New message :">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField layoutX="138.0" layoutY="478.0" prefHeight="30.0" prefWidth="105.0">
+      <TextField fx:id="to_user" layoutX="174.0" layoutY="514.0" prefHeight="30.0" prefWidth="105.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField layoutX="33.0" layoutY="515.0" prefHeight="30.0" prefWidth="533.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextField>
-      <Button ellipsisString="20" layoutX="577.0" layoutY="516.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Send" textFill="#214316">
+      <Button fx:id="sent_btn" ellipsisString="20" layoutX="721.0" layoutY="557.0" mnemonicParsing="false" onAction="#sent_btn" prefHeight="25.0" prefWidth="64.0" text="Send" textFill="#214316">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <Label layoutX="33.0" layoutY="70.0" prefHeight="25.0" prefWidth="105.0" text="Chat:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ListView layoutX="33.0" layoutY="104.0" prefHeight="370.0" prefWidth="620.0" />
-      <Button ellipsisString="20" layoutX="660.0" layoutY="445.0" mnemonicParsing="false" text="Refresh" textFill="#214316">
+      <ListView fx:id="chat_window" layoutX="19.0" layoutY="104.0" prefHeight="398.0" prefWidth="766.0" />
+      <Button fx:id="refresh_btn" ellipsisString="20" layoutX="723.0" layoutY="515.0" mnemonicParsing="false" onAction="#click_refresh" text="Refresh" textFill="#214316">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
       <Button layoutX="734.0" layoutY="16.0" mnemonicParsing="false" text="Logout" />
+      <Label layoutX="106.0" layoutY="517.0" prefHeight="25.0" prefWidth="64.0" text="Send to :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="404.0" layoutX="17.0" layoutY="101.0" stroke="BLACK" strokeType="INSIDE" width="772.0" />
    </children>
 </Pane>
