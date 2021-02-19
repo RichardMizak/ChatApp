@@ -45,7 +45,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button layoutX="734.0" layoutY="16.0" mnemonicParsing="false" text="Logout" />
+      <Button fx:id="close_btn" cancelButton="true" layoutX="734.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
       <Label layoutX="106.0" layoutY="517.0" prefHeight="25.0" prefWidth="64.0" text="Send to :">
          <font>
             <Font size="16.0" />
