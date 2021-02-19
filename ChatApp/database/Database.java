@@ -35,17 +35,17 @@ public class Database {
             return false;
         String hashPassword = new Util().getMd5(password);
         try {
-            Connection con = getConnection();
-            if (con == null) {
-                System.out.println("Conection error.");
+            Connection conn=getConnection();
+            if (conn==null) {
+                System.out.println("Connection error.");
                 return false;
             }
-            PreparedStatement ps = con.prepareStatement(insertNewUser);
+            PreparedStatement ps=conn.prepareStatement(insertNewUser);
             ps.setString(1, login);
             ps.setString(2, hashPassword);
             int result = ps.executeUpdate();
-            con.close();
-            if(result == 0)
+            conn.close();
+            if(result==0)
                 return false;
             else{
                 System.out.println("User has been registered.");
@@ -58,16 +58,16 @@ public class Database {
     }
     //--------------------------------------------------------------------------------------------
     public Users loginUser(String login, String password) {
-        if (login == null || login.equals("") || password == null || password.length() < 6)
+        if (login==null || login.equals("") || password==null || password.length() < 6)
             return null;
-        String hashPassword = new Util().getMd5(password);
+        String hashPassword=new Util().getMd5(password);
         try {
-            Connection con = getConnection();
-            if (con == null) {
+            Connection conn=getConnection();
+            if (conn==null) {
                 System.out.println("Connection error.");
                 return null;
             }
-            PreparedStatement ps = con.prepareStatement(loginUser);                                                         ;
+            PreparedStatement ps=conn.prepareStatement(loginUser);                                                         ;
             ps.setString(1, login);
             ps.setString(2, hashPassword);
             ResultSet rs = ps.executeQuery();
@@ -75,10 +75,10 @@ public class Database {
                 System.out.println("Success.");
                 int id = rs.getInt("id");
                 Users users = new Users(id, login, hashPassword);
-                con.close();
+                conn.close();
                 return users;
             } else {
-                con.close();
+                conn.close();
                 System.out.println("Incorect credentials.");
                 return null;
             }
@@ -89,7 +89,7 @@ public class Database {
     }
     //----------------------------------------------------------------------------------------------
     public boolean changePwd(String login, String oldPwd, String newPwd){
-        if (oldPwd == null || oldPwd.equals("") || newPwd==null || newPwd.equals(""))
+        if (oldPwd==null || oldPwd.equals("") || newPwd==null || newPwd.equals(""))
             return  false;
         try {
             Connection conn=getConnection();
@@ -126,17 +126,17 @@ public class Database {
         if(to==-1)
             return false;
         try {
-            Connection con = getConnection();
-            if(con ==null){
+            Connection conn=getConnection();
+            if(conn==null){
                 System.out.println("Error.");
                 return false;
             }
-            PreparedStatement ps = con.prepareStatement(newMessage);
+            PreparedStatement ps=conn.prepareStatement(newMessage);
             ps.setInt(1,from);
             ps.setInt(2, to);
             ps.setString(3, text);
-            int result = ps.executeUpdate();
-            con.close();
+            int result=ps.executeUpdate();
+            conn.close();
             if(result<1){
                 System.out.println("Message not sent.");
                 return false;
@@ -145,6 +145,7 @@ public class Database {
                 System.out.println("Message sent.");
                 return true;
             }
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -154,6 +155,7 @@ public class Database {
     public int getUserId(String login){
         if(login==null || login.equals(""))
             return -1;
+        int id=-1;
         try{
             Connection conn=getConnection();
             if(conn!=null) {
@@ -162,13 +164,14 @@ public class Database {
                 ResultSet rs = ps.executeQuery();
                 System.out.println(ps);
                 if (rs.next()) {
-                    int id = rs.getInt("id");
+                    id = rs.getInt("id");
+                }
                     conn.close();
                     return id;
-                } else {
+                 /*else {
                     conn.close();
                     return -1;
-                }
+             }*/
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -181,28 +184,35 @@ public class Database {
     public List<Message> getMyMessages(String login){
         if(login==null || login.equals(""))
             return null;
-        List<Message> messagesList=new ArrayList<>();
-        try{
-            Connection conn=getConnection();
-            if (conn==null){
-                System.out.println("error");
-                return null;
+        int id=getUserId(login);
+        if (id!=-1) {
+            try {
+                Connection conn = getConnection();
+                if (conn == null) {
+                    System.out.println("error");
+                    return null;
+                }
+                List<Message> messagesList = new ArrayList<>();
+                PreparedStatement ps = conn.prepareStatement(myOldMesages);
+                ps.setInt(1,id);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String from = rs.getString("user.login");
+                    String msg = rs.getString("text");
+                    int idMsg = rs.getInt("message.id");
+                    Date date = rs.getDate("dt");
+                    Message m = new Message(idMsg,from,login,date,msg);
+                    messagesList.add(m);
+
+                }
+                conn.close();
+                //  deleteMessages(login);
+                return messagesList;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            PreparedStatement ps= conn.prepareStatement(myOldMesages);
-            ps.setString(1, login);
-            ResultSet rs= ps.executeQuery();
-            while(rs.next()){
-                String from = rs.getString("Who");
-                String text = rs.getString("Message");
-                Date time = rs.getDate("When");
-            }
-            conn.close();
-          //  deleteMessages(login);
-            return messagesList;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return null;
     }
