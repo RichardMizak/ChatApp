@@ -3,22 +3,21 @@ package sk.kosickaakademia.mizak.chatapp.entity;
 import java.util.Date;
 
 public class Message {
-    private int id;
+    private int idMsg;
     private String from;
     private String to;
     private Date date;
-    private String text;
+    private String msg;
 
-    public Message(int id, String from, String to, Date date, String text) {
-        this.id = id;
+    public Message(int idMsg, String from, String to, Date date, String msg) {
+        this.idMsg = idMsg;
         this.from = from;
         this.to = to;
         this.date = date;
-        this.text = text;
+        this.msg = msg;
     }
-
     public int getId() {
-        return id;
+        return idMsg;
     }
 
     public String getFrom() {
@@ -34,6 +33,6 @@ public class Message {
     }
 
     public String getText() {
-        return text;
+        return msg;
     }
 }
