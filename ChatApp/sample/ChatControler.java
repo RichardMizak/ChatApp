@@ -34,6 +34,8 @@ public class ChatController {
     public void logout(javafx.event.ActionEvent ae) {
         Stage stage = (Stage) close_btn.getScene().getWindow();
         stage.close();
+        System.out.println("Logged Out.");
+        System.out.println("Chat closed.");
     }
     //--------------------------------------------------------------------------------
     public void setUser(Users users){
