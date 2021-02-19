@@ -28,7 +28,7 @@ public class ChatController {
    // DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     //-------------------------------------------------------------------------------------
     public ChatController(){
-        System.out.println("Success.");
+    //    System.out.println("Success.");
     }
     //--------------------------------------------------------------------------------
     public void logout(javafx.event.ActionEvent ae) {
