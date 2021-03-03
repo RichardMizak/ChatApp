@@ -20,9 +20,9 @@ public class Database {
                                       "INNER JOIN user ON user.id=message.fromUser " +
                                       "WHERE toUser = ?";
     //----------------------------------------------------------------------------------------------
-    private String url = "jdbc:mysql://itsovy.sk:3306/chat2021";
-    private String username = "mysqluser";
-    private String password = "Kosice2021!";
+    private String url = "";
+    private String username = "";
+    private String password = "";
     //----------------------------------------------------------------------------------------------
     private Connection getConnection() throws ClassNotFoundException,SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
